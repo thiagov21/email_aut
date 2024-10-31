@@ -4,19 +4,20 @@ import win32com.client as win32
 import openpyxl
 import re
 
-# Caminho da planilha de clientes
-caminho_planilha = r"\\mao-fs01.technos.local\Arquivos\Departamental\PÓS VENDA\Laboratorio\COBRANÇA POSTOS Thiago V\automação\projeto email troca\DATA\email clientes.xlsx"
+# Caminho da planilha de clientes (exemplo)
+caminho_planilha = r"data/exemplo_email_clientes.xlsx"
 
-# Caminho do documento em PDF a ser anexado
-caminho_anexo = r"\\mao-fs01.technos.local\Arquivos\Departamental\PÓS VENDA\Laboratorio\COBRANÇA POSTOS Thiago V\automação\projeto email troca\COMUNICADO\Manual_de_troca_site_Technos_Care 1.pdf"
+# Caminho do documento em PDF a ser anexado (exemplo)
+caminho_anexo = r"data/exemplo_manual_troca.pdf"
 
-link_info = f'https://technoscare.grupotechnos.com.br/Pergunta/DetalhesPergunta/41'
+# Link para informações adicionais (exemplo)
+link_info = 'https://exemplo.com/instrucoes'
 
 # Inicializa o Outlook
 outlook = win32.Dispatch('outlook.application')
 
-# Endereços de e-mail para cópia oculta (BCC)
-emails_cco = "varfurado@gmail.com"
+# Endereços de e-mail para cópia oculta (BCC) (exemplo)
+emails_cco = "exemplo@gmail.com"
 
 # Função para validar endereço de e-mail
 def email_valido(email):
@@ -51,58 +52,37 @@ try:
             if email_valido(email_destinatario):
                 # Criar um novo e-mail
                 email = outlook.CreateItem(0)
-                email.Subject = f"Grupo Technos - Ordem de Serviço"
+                email.Subject = f"Grupo Exemplo - Ordem de Serviço"
                 
-                # Corpo do e-mail em HTML com link clicável
+                # Corpo do e-mail em HTML com texto de exemplo
                 corpo_email = f"""
                 <p>Prezado(a) {cliente_planilha},</p>
-                <p>Em referência ao serviço do relógio marca Technos, modelo {relogio_cliente},<br>
-                informamos que, infelizmente, não será possível concluir o reparo do produto referente
+                <p>Este é um e-mail de exemplo para demonstrar a automação de envio de mensagens.</p>
+                <p>Em referência ao serviço do relógio marca Exemplo, modelo {relogio_cliente},<br>
+                informamos que não será possível concluir o reparo do produto referente
                 à Ordem de Serviço {OS_cliente} dentro do prazo legal de 30 (trinta) dias.<br>
-                Gerando assim a OS de troca : {OS_troca}.</p>
+                Gerando assim a OS de troca: {OS_troca}.</p>
 
-                <p>Com o intuito de proporcionar a melhor experiência possível, gostaríamos de oferecer
-                a substituição do produto por um modelo novo, conforme as opções abaixo:</p>
-
-                <ul>
-                    <li><strong>Garantia de venda:</strong> A substituição será feita sem qualquer custo adicional, com um novo relógio similar ao seu e uma nova garantia.</li>
-                    <li><strong>Sem garantia:</strong> Haverá um custo para a substituição, porém, oferecemos um desconto referente ao valor do seu relógio no catálogo.</li>
-                    <li><strong>Garantia parcial:</strong> Será cobrado apenas o custo da peça que não está coberta pela garantia.</li>
-                </ul>
-
-                <p>Para agilizar esse processo, disponibilizamos um catálogo no site <a href="https://technoscare.grupotechnos.com.br/">www.technoscare.com.br</a>,
-                onde você poderá selecionar o modelo que mais lhe agradar. Os produtos disponíveis
-                são equivalentes ao seu relógio original, tanto em preço quanto em características.</p>
+                <p>Com o intuito de proporcionar uma melhor experiência, gostaríamos de oferecer
+                a substituição do produto por um modelo novo. Por favor, verifique as opções disponíveis.</p>
 
                 <p>É fundamental que essa escolha seja feita em até 05 (CINCO) dias úteis. Para auxiliá-lo(a),
-                criamos um passo a passo que explica como realizar a seleção do novo produto.</p>
+                disponibilizamos um passo a passo em nosso site para que você possa realizar a seleção do novo produto.</p>
 
-                <p>Para acessar o passo a passo <a href="{link_info}">CLIQUE AQUI</a>.</p>
+                <p>Para acessar as instruções, <a href="{link_info}">CLIQUE AQUI</a>.</p>
                 
-                <p>Em anexo, também está o passo a passo para acessar o site.</p>
+                <p>Em anexo, está o manual para acessar o site.</p>
 
                 <p>Após a confirmação de sua escolha, o novo produto será enviado com um prazo estimado
-                de até 20 (VINTE) dias para entrega. Recomendamos que a escolha seja feita o quanto
-                antes para que possamos atender você da maneira mais rápida possível.</p>
+                de até 20 (VINTE) dias para entrega. Para dúvidas, entre em contato conosco através do e-mail
+                <a href="mailto:exemplo@exemplo.com">exemplo@exemplo.com</a>.</p>
 
-                <p>Caso nenhum dos modelos disponíveis atenda às suas expectativas, por favor, entre
-                em contato conosco através do e-mail <a href="mailto:sac@grupotechnos.com.br">sac@grupotechnos.com.br</a>.
-                Será possível solicitar uma nova seleção de modelos ou indicar até cinco opções das marcas do Grupo Technos
-                que mais lhe agradem. Em caso de variação de preço, analisaremos as condições de
-                disponibilidade e ajustaremos conforme necessário. Além disso, está disponível a
-                opção de restituição do valor pago, conforme o artigo 18 do Código de Defesa do
-                Consumidor (CDC).</p>
-
-                <p>Lamentamos os eventuais transtornos e contamos com sua compreensão.</p>
-                <p>Agradecemos sua preferência e confiança em nossos serviços.</p>
-                
-                <b>Este é um email automático. Por favor, não responda essa mensagem.</b>
-
+                <p>Lamentamos os transtornos e agradecemos sua compreensão.</p>
                 <p>Atenciosamente,<br>
-                Grupo Technos<br>
-                <a href="https://technoscare.grupotechnos.com.br/">www.technoscare.com.br</a></p>
+                Grupo Exemplo<br>
+                <a href="https://exemplo.com">www.exemplo.com</a></p>
+                <b>Este é um email automático. Por favor, não responda essa mensagem.</b>
                 """
-
 
                 email.HTMLBody = corpo_email  # Define o corpo do e-mail como HTML
                 email.To = email_destinatario
